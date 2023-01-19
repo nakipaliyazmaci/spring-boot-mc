@@ -1,0 +1,6 @@
+
+*.class
+*.jar
+*.jar
+*.jar
+inventory-service/bin/.mvn/wrapper/maven-wrapper.jar
