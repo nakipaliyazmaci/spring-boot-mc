@@ -1,5 +1,6 @@
 package com.sbmc.nali.orderservice.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -11,7 +12,9 @@ import com.sbmc.nali.orderservice.model.OrderLineItem;
 import com.sbmc.nali.orderservice.repository.OrderRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -22,10 +25,11 @@ public class OrderService {
 	{
 		Order order = new Order();
 		order.setOrderNumber(UUID.randomUUID().toString());
-		request.getDtoList()
+		List<OrderLineItem> orderLineItemList = request.getDtoList()
 			   .stream()
-			   .map(orderLineItemsDto -> mapToDto(orderLineItemsDto));
-		
+			   .map(this::mapToDto)
+			   .toList();
+		order.setOrderLineItem(orderLineItemList);
 		orderRepository.save(order);
 	}
 
@@ -35,6 +39,7 @@ public class OrderService {
 		item.setPrice(orderLineItemsDto.getPrice());
 		item.setQuantity(orderLineItemsDto.getQuantity());
 		item.setSkuCode(orderLineItemsDto.getSkuCode());
+		log.debug(orderLineItemsDto.toString());
 		return item;
 	}
 
