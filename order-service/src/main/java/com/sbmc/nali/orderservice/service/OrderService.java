@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sbmc.nali.orderservice.dto.OrderLineItemsDto;
 import com.sbmc.nali.orderservice.dto.OrderRequest;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderService {
 
 	private final OrderRepository orderRepository;
